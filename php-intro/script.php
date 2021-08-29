@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $categorias = array();
 
 $categorias[] = 'Infantil';
@@ -14,32 +16,37 @@ $idade = $_POST['idade'];
 //var_dump($idade);
 
 if(empty($nome))
-{
-    echo 'O nome não pode ser vazio!';
+{   
+    $_SESSION['mensagem-de-erro'] = 'O nome não pode ser vazio!';
+    header('location: index.php');
     return;
 }
 
-if(strlen($nome) < 3)
+else if(strlen($nome) < 3)
 {
-    echo 'O nome deve conter mais que três caracteres!';
+    $_SESSION['mensagem-de-erro'] = 'O nome deve conter mais que três caracteres!';
+    header('location: index.php');
     return;
 }
 
-if(strlen($nome) > 40)
+else if(strlen($nome) > 40)
 {
-    echo 'O nome é muito extenso!';
+    $_SESSION['mensagem-de-erro'] = 'O nome é muito extenso!';
+    header('location: index.php');
     return;
 }
 
-if(!is_numeric($idade))
+else if(!is_numeric($idade))
 {
-    echo 'Idade não é um número!';
+    $_SESSION['mensagem-de-erro'] = 'Idade não é um número!';
+    header('location: index.php');
     return;
 }
 
-if(empty($idade))
+else if(empty($idade))
 {
-    echo 'A idade não pode ser vazia!';
+    $_SESSION['mensagem-de-erro'] = 'A idade não pode ser vazia!';
+    header('location: index.php');
     return;
 }
 
@@ -50,7 +57,9 @@ switch ($idade)
         {   
             if($categorias[$i] === "Infantil")
             {
-                echo "O nadador ".$nome." compete na categoria Infantil";
+                $_SESSION['mensagem-de-sucesso'] = "O nadador ".$nome." compete na categoria Infantil";
+                header('location: index.php');
+                return;
             }
         }
         break;
@@ -59,7 +68,9 @@ switch ($idade)
         {   
             if($categorias[$i] === "Adolescente")
             {
-                echo "O nadador ".$nome." compete na categoria Adolescente";
+                $_SESSION['mensagem-de-sucesso'] = "O nadador ".$nome." compete na categoria Adolescente";
+                header('location: index.php');
+                return;
             }
         }
         break;
@@ -68,7 +79,9 @@ switch ($idade)
         {   
             if($categorias[$i] === "Adulto")
             {
-                echo "O nadador ".$nome." compete na categoria Adulto";
+                $_SESSION['mensagem-de-sucesso'] = "O nadador ".$nome." compete na categoria Adulto";
+                header('location: index.php');
+                return;
             }
         }
         break;
@@ -77,11 +90,14 @@ switch ($idade)
         {   
             if($categorias[$i] === "Idoso")
             {
-                echo "O nadador ".$nome." compete na categoria Idoso";
+                $_SESSION['mensagem-de-sucesso'] = "O nadador ".$nome." compete na categoria Idoso";
+                header('location: index.php');
+                return;
             }
         }
         break;
     default:
-        echo "O nadador ".$nome." tem idade inválida";
+        $_SESSION['mensagem-de-sucesso'] = "O nadador ".$nome." tem idade inválida";
+        header('location: index.php');
         break;
 }
